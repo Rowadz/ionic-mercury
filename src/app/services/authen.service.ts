@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
@@ -10,11 +10,28 @@ import { Storage } from '@ionic/storage';
 })
 export class AuthenService {
   private readonly END_POINT = environment.api;
+  user: Subject<User>;
+  userData: User;
   constructor(private readonly http: Http, private readonly storage: Storage) {
+    this.user = new Subject();
     this.storage
       .get('curr_user')
-      .then(u => console.log(u))
+      .then(u => {
+        try {
+          u = JSON.parse(u);
+          if (u.user.id) {
+            this.user.next(u.user);
+            this.userData = u.user;
+            console.log(u);
+          }
+        } catch (error) {}
+      })
       .catch(e => console.error(e));
+  }
+
+  logout() {
+    this.storage.remove('curr_user');
+    this.user.next(undefined);
   }
 
   login(credentials: Credentials): Observable<User> {
@@ -28,10 +45,19 @@ export class AuthenService {
           .catch(e => console.log(e));
         if (u.message === 'check your password and email') {
           throw new Error('bad login');
+        } else {
+          this.user.next(u);
+          this.userData = u;
         }
         return u;
       })
     );
+  }
+
+  register(u: Partial<User>): Observable<any> {
+    return this.http
+      .post(`${this.END_POINT}/register`, u)
+      .pipe(map(res => res.json(), map(x => x)));
   }
 }
 

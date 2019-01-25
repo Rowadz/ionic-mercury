@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Explore
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="posts$ | async as posts; else loading">
+    <ng-container *ngIf="posts.length; else noItems">
+      <div *ngFor="let post of posts">
+        <ion-card>
+          <ion-item>
+            <ion-chip>
+              <ion-label>{{ post.created_at | date }}</ion-label>
+            </ion-chip>
+            <ion-chip slot="end">
+              <ion-label>{{ post.tag.name }}</ion-label>
+            </ion-chip>
+          </ion-item>
+          <ion-img [src]="post.post_images[0].location"></ion-img>
+          <ion-item>
+            <ion-chip>
+              <ion-avatar>
+                <img [src]="post.user.image">
+              </ion-avatar>
+              <ion-label>{{ post.user.name }}</ion-label>
+            </ion-chip>
+            <!-- <ion-button fill="outline" slot="end" [routerDirection]="'root'" [routerLink]="'/post/' + post.id">View</ion-button> -->
+            <ion-button fill="outline" slot="end" (click)="presentModal(post.id)">View</ion-button>
+          </ion-item>
+
+          <ion-card-content>
+            {{ post.body.substr(1, 20) }} ....
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <ion-row>
+        <ion-col text-center>
+          <ng-container *ngIf="!postsService.loadingMore; else loadingMore">
+            <ion-button shape="round" color="dark" (click)="loadMore()">Load more</ion-button>
+          </ng-container>
+          <ng-template #loadingMore>
+            <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+
+    </ng-container>
+    <ng-template #noItems>No posts :(</ng-template>
+  </div>
+  <ng-template #loading>
+    <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+  </ng-template>
+
+
+</ion-content>

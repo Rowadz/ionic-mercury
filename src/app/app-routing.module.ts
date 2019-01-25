@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginGuard } from './start/login.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'start',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -15,7 +16,18 @@ const routes: Routes = [
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },
-  { path: 'start', loadChildren: './start/start.module#StartPageModule' }
+  {
+    path: 'login',
+    canActivate: [LoginGuard],
+    loadChildren: './start/start.module#StartPageModule'
+  },
+  {
+    path: 'register',
+    canActivate: [LoginGuard],
+    loadChildren: './auth/register/register.module#RegisterPageModule'
+  },
+  { path: 'posts', loadChildren: './posts/posts.module#PostsPageModule' }
+  // { path: 'post/:id', loadChildren: './posts/post/post.module#PostPageModule' }
 ];
 
 @NgModule({

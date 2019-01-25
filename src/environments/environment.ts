@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // api: 'http://mercury.test/api'
-  api: 'http://7a609aed.ngrok.io/api'
+  api: 'http://3bf8c5b2.ngrok.io/api'
 };
 
 /*

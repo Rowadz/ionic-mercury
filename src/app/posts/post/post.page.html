@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button text="" icon="add"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="post$ | async as post; else loading">
+    <ng-container *ngIf="post.id; else noPost">
+      <ion-grid>
+        <ion-row>
+          <ion-chip>
+            <ion-avatar>
+              <img [src]="post.user.image">
+            </ion-avatar>
+            <ion-label>{{ post.user.name }}</ion-label>
+          </ion-chip>
+          <ion-chip>
+            <ion-label>
+              {{ post.created_at | date }}
+            </ion-label>
+          </ion-chip>
+          <ion-chip>
+            <ion-label>
+              {{ post.status}}
+            </ion-label>
+          </ion-chip>
+          <ion-chip>
+            <ion-label>{{ post.tag.name }}</ion-label>
+          </ion-chip>
+        </ion-row>
+        <ion-row *ngIf="bookMarked !== undefined">
+          <ng-container *ngIf="bookMarked; else notBookMarked">
+            <ion-button (click)="unBookmark()" [disabled]="disableBtn">
+              <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+            </ion-button>
+          </ng-container>
+          <ng-template #notBookMarked>
+            <ion-button (click)="bookmark()" [disabled]="disableBtn">
+              <ion-icon slot="icon-only" name="bookmarks"></ion-icon>
+            </ion-button>
+          </ng-template>
+          <ion-button>
+            {{post.quantity}}
+          </ion-button>
+          <ion-button (click)="close()" color="danger">
+            <ion-icon slot="end" name="close"></ion-icon>
+            Close
+          </ion-button>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-slides pager="
+                true">
+              <ion-slide *ngFor="let image of post.post_images">
+                <ion-img [src]="image.location"></ion-img>
+              </ion-slide>
+            </ion-slides>
+            <ion-col>
+              <ion-text color="dark" text-center>
+                <h4> {{ post.header }} </h4>
+              </ion-text>
+            </ion-col>
+            <ion-card-content>
+              {{ post.body }}
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+
+
+        <ion-list>
+          <ion-item *ngFor="let comment of post.comments">
+
+            <ion-avatar slot="start">
+              <img [src]="comment.user.image">
+            </ion-avatar>
+            <ion-text color="dark">
+              <ion-text color="primary">
+                {{ comment.user.name }} on {{ comment.created_at | date }}
+              </ion-text>
+              <p>
+                {{ comment.body }}
+              </p>
+            </ion-text>
+          </ion-item>
+        </ion-list>
+
+      </ion-grid>
+    </ng-container>
+    <ng-template #noPost>
+
+      <ion-text color="danger">
+        <h4> Something went wrong </h4>
+      </ion-text>
+    </ng-template>
+  </div>
+  <ng-template #loading>
+    <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+  </ng-template>
+
+</ion-content>

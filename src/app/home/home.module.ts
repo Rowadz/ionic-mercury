@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { FabButtonComponent } from '../shared/comp/fab-button/fab-button.component';
+import { Card1Component } from './card1/card1.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, FabButtonComponent, Card1Component]
 })
 export class HomePageModule {}
