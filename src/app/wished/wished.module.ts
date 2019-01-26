@@ -5,13 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PostsPage } from './posts.page';
-import { PostPage } from './post/post.page';
+import { WishedPage } from './wished.page';
+import { PostPage } from '../posts/post/post.page';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: PostsPage
+    component: WishedPage
   }
 ];
 
@@ -20,8 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedModule
   ],
-  declarations: [PostsPage]
+  declarations: [WishedPage]
 })
-export class PostsPageModule {}
+export class WishedPageModule {}

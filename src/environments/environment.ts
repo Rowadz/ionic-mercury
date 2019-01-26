@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   // api: 'http://mercury.test/api'
-  api: 'http://3d7ed870.ngrok.io/api'
+  api: 'http://mercury.test/api',
+  socket: 'https://green-impala-79.localtunnel.me'
 };
 
 /*

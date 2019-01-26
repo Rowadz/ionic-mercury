@@ -66,7 +66,7 @@ export interface Credentials {
   password: string;
 }
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   API_KEY: string;

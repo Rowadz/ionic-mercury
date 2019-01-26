@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthenService, User } from './services/authen.service';
 import { Router } from '@angular/router';
+import { NotificationService } from './shared/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthenService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly notificationService: NotificationService
   ) {
     this.initializeApp();
     this.subToUser();
@@ -32,11 +34,18 @@ export class AppComponent {
   }
 
   private subToUser() {
-    this.authService.user.subscribe((u: User) => (this.user = u));
+    this.authService.user.subscribe((u: User) => {
+      this.user = u;
+      // this.subToNotifications(+this.user.id);
+    });
   }
 
   logout() {
     this.authService.logout();
     this.router.navigate(['/home']);
+  }
+
+  private subToNotifications(id: number) {
+    // this.notificationService.listen(id);
   }
 }

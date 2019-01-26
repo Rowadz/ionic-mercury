@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
-import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +9,7 @@ import { Socket } from 'ngx-socket-io';
 export class PostDataService {
   private END_POINT: string = environment.api;
 
-  constructor(private readonly http: Http, private readonly socket: Socket) {
-    this.socket.on(`newCommentNotify:${1}`, () => {
-      alert(1);
-    });
-  }
+  constructor(private readonly http: Http) {}
 
   get(id: number) {
     return this.http

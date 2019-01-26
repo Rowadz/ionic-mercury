@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Saved posts
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="wished$ | async as wished; else loading">
+    <ng-container *ngIf="wished.length; else noItems">
+      <div *ngFor="let wish of wished">
+        <ion-card>
+          <ion-item>
+            <ion-chip>
+              <ion-label>{{ wish.created_at | date }}</ion-label>
+            </ion-chip>
+            <ion-chip slot="end">
+              <ion-label>{{ wish.post.tag.name }}</ion-label>
+            </ion-chip>
+          </ion-item>
+          <ion-img [src]="wish.post.post_images[0].location"></ion-img>
+          <ion-item>
+            <ion-chip>
+              <ion-avatar>
+                <img [src]="wish.post.user.image">
+              </ion-avatar>
+              <ion-label>{{ wish.post.user.name }}</ion-label>
+            </ion-chip>
+            <!-- <ion-button fill="outline" slot="end" [routerDirection]="'root'" [routerLink]="'/post/' + post.id">View</ion-button> -->
+            <ion-button fill="outline" slot="end" (click)="presentModal(wish.post.id)">View</ion-button>
+          </ion-item>
+
+          <ion-card-content>
+            {{ wish.post.body.substr(1, 20) }} ....
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <!-- <ion-row>
+        <ion-col text-center>
+          <ng-container *ngIf="!postsService.loadingMore; else loadingMore">
+            <ion-button shape="round" color="dark" (click)="loadMore()">Load more</ion-button>
+          </ng-container>
+          <ng-template #loadingMore>
+            <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+          </ng-template>
+        </ion-col>
+      </ion-row> -->
+
+    </ng-container>
+    <ng-template #noItems>No saved posts :(</ng-template>
+  </div>
+  <ng-template #loading>
+    <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+  </ng-template>
+
+</ion-content>

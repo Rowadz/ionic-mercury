@@ -26,8 +26,12 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     loadChildren: './auth/register/register.module#RegisterPageModule'
   },
-  { path: 'posts', loadChildren: './posts/posts.module#PostsPageModule' }
-  // { path: 'post/:id', loadChildren: './posts/post/post.module#PostPageModule' }
+  { path: 'posts', loadChildren: './posts/posts.module#PostsPageModule' },
+  { path: 'wished', loadChildren: './wished/wished.module#WishedPageModule' },
+  {
+    path: 'profile/:id',
+    loadChildren: './profile/profile.module#ProfilePageModule'
+  }
 ];
 
 @NgModule({
