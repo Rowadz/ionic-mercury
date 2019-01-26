@@ -1,60 +1,81 @@
 <ion-header>
+
   <ion-toolbar>
-    <ion-title>USER_NAME</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Profile Page</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content class="card-background-page">
+<ion-content>
+  <div *ngIf="user$ | async as userData; else loading">
+    <ng-container *ngIf="userData; else noUser">
+      <img [src]="userData.user.image" />
+      <div align="center">
+        <h1> {{ userData.user.name }} </h1>
+      </div>
+      <ion-list>
+        <ion-item>
+          <ion-label>Followers</ion-label>
+          <ion-chip>
+            <ion-label>{{ userData.followers }}</ion-label>
+          </ion-chip>
+        </ion-item>
+        <ion-item>
+          <ion-label>Following</ion-label>
+          <ion-chip>
+            <ion-label>{{ userData.following }}</ion-label>
+          </ion-chip>
+        </ion-item>
+        <ion-item>
+          <ion-label>Date of Birth</ion-label>
+          <ion-chip>
+            <ng-container *ngIf="userData.user.date_of_birth; else noDate">
+              <ion-label>{{ userData.user.date_of_birth }}</ion-label>
+            </ng-container>
+            <ng-template #noDate>
+              <ion-label>no data</ion-label>
+            </ng-template>
+          </ion-chip>
+        </ion-item>
+        <ion-item>
+          <ng-container *ngIf="userData.status === 'the same user'; else elseTemplate">
+            <ion-label>This is you :)</ion-label>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <ng-container *ngIf="userData.status === null; else notNull">
+              <ion-label>Follow</ion-label>
+              <ion-button (click)="follow(userData.user.id)" [disabled]="followDisable">
+                <ion-icon name="person-add"></ion-icon>
+              </ion-button>
+            </ng-container>
+            <ng-template #notNull>
+              <ion-label>unFollow</ion-label>
+              <ion-button (click)="unFollow(userData.status.id)" [disabled]="followDisable" color="danger">
+                <ion-icon name="remove-circle"></ion-icon>
+              </ion-button>
+            </ng-template>
 
-  <ion-card>
-    <img src="assets/profile/profile.png" />
-    <!-- <div class="card-title">São Paulo</div> -->
-    <!-- <div class="card-subtitle">41 Listings</div> -->
-  </ion-card>
-
-  <div align="center">
-    <h1> Information </h1>
-    <img class="profile-image" src="assets/home/group.png">
-    <h4>ROWAD</h4>
-    <h5>21 years old</h5>
+          </ng-template>
+        </ion-item>
+        <ion-item>
+          <ion-text color="primary">
+            <p><b>About </b>{{ userData.user.about }}</p>
+          </ion-text>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-template #noItems>No user!</ng-template>
   </div>
-  <ion-list>
-    <ion-item>
-      <ion-label>Number of posts</ion-label>
-      <ion-chip>
-        <ion-label>99</ion-label>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-label>Followers</ion-label>
-      <ion-chip>
-        <ion-label>99</ion-label>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-label>Following</ion-label>
-      <ion-chip>
-        <ion-label>99</ion-label>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-label>Date of Birth</ion-label>
-      <ion-chip>
-        <ion-label>99</ion-label>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-label>Follow</ion-label>
-      <ion-button>
-        <ion-icon slot="icon-only" name="star"></ion-icon>
-      </ion-button>
-    </ion-item>
-    <ion-item>
-      <ion-text color="primary">
-        <p><b>About</b> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur, dolorum in? Architecto
-          iusto
-          quibusdam inventore quos nisi deleniti ducimus repudiandae.</p>
-      </ion-text>
-    </ion-item>
-  </ion-list>
+  <ng-template #loading>
+    <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+  </ng-template>
+
+
+
+
 </ion-content>

@@ -25,7 +25,7 @@
           </ion-item>
           <ion-img [src]="post.post_images[0].location"></ion-img>
           <ion-item>
-            <ion-chip>
+            <ion-chip (click)="showProfile(post.user.id)">
               <ion-avatar>
                 <img [src]="post.user.image">
               </ion-avatar>

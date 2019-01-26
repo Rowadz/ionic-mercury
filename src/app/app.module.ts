@@ -13,14 +13,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { PostPage } from './posts/post/post.page';
+import { ProfilePage } from './profile/profile.page';
 
 const config: SocketIoConfig = {
   url: environment.socket,
   options: {}
 };
 @NgModule({
-  declarations: [AppComponent, PostPage],
-  entryComponents: [PostPage],
+  declarations: [AppComponent, PostPage, ProfilePage],
+  entryComponents: [PostPage, ProfilePage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

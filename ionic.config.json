@@ -1,5 +1,7 @@
 {
   "name": "mercury",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

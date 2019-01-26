@@ -27,11 +27,7 @@ const routes: Routes = [
     loadChildren: './auth/register/register.module#RegisterPageModule'
   },
   { path: 'posts', loadChildren: './posts/posts.module#PostsPageModule' },
-  { path: 'wished', loadChildren: './wished/wished.module#WishedPageModule' },
-  {
-    path: 'profile/:id',
-    loadChildren: './profile/profile.module#ProfilePageModule'
-  }
+  { path: 'wished', loadChildren: './wished/wished.module#WishedPageModule' }
 ];
 
 @NgModule({

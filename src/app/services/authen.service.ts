@@ -14,19 +14,33 @@ export class AuthenService {
   userData: User;
   constructor(private readonly http: Http, private readonly storage: Storage) {
     this.user = new Subject();
-    this.storage
-      .get('curr_user')
-      .then(u => {
-        try {
-          u = JSON.parse(u);
-          if (u.user.id) {
-            this.user.next(u.user);
-            this.userData = u.user;
-            console.log(u);
-          }
-        } catch (error) {}
-      })
-      .catch(e => console.error(e));
+    this.publishUser();
+  }
+
+  private async publishUser() {
+    let u = await this.storage.get('curr_user');
+    try {
+      u = JSON.parse(u);
+      if (u.user.id) {
+        this.user.next(u.user);
+        this.userData = u.user;
+      }
+    } catch (error) {}
+  }
+
+  async getUserId() {
+    let u = await this.storage.get('curr_user');
+    try {
+      u = JSON.parse(u);
+      if (u.user.id) {
+        this.user.next(u.user);
+        this.userData = u.user;
+        console.log(u);
+      }
+    } catch (error) {
+      throw new Error('no logged user');
+    }
+    return u.user.id;
   }
 
   logout() {

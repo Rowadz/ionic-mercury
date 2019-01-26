@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
-      <ion-back-button text="" icon="add"></ion-back-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -43,10 +45,6 @@
           </ng-template>
           <ion-button>
             {{post.quantity}}
-          </ion-button>
-          <ion-button (click)="close()" color="danger">
-            <ion-icon slot="end" name="close"></ion-icon>
-            Close
           </ion-button>
         </ion-row>
 

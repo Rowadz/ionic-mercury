@@ -15,7 +15,14 @@
                 Home
               </ion-label>
             </ion-item>
+
             <ng-container *ngIf="user; else noUser">
+              <ion-item (click)="showProfile()">
+                <ion-icon slot="start" name="contact"></ion-icon>
+                <ion-label>
+                  Profile
+                </ion-label>
+              </ion-item>
               <ion-item [routerDirection]="'root'" routerLink="/posts">
                 <ion-icon slot="start" name="eye"></ion-icon>
                 <ion-label>
