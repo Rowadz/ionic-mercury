@@ -7,6 +7,7 @@ import { AuthenService, User } from './services/authen.service';
 import { Router } from '@angular/router';
 import { NotificationService } from './shared/notification.service';
 import { ProfilePage } from './profile/profile.page';
+import { FollowersPage } from './followers/followers.page';
 
 @Component({
   selector: 'app-root',
@@ -47,16 +48,33 @@ export class AppComponent {
     this.router.navigate(['/home']);
   }
 
-  async showProfile() {
+  async showModal(componentName: string, option?: boolean) {
     const id = await this.authService.getUserId();
+    const comp = this.getComponenet(componentName);
+    const componentProps = {
+      id,
+      option
+    };
+    if (!option) {
+      delete componentProps.option;
+    }
     const modal = await this.modalController.create({
-      component: ProfilePage,
-      id: `profile${id}`,
-      componentProps: { id },
+      component: comp,
+      id: `modal${id}`,
+      componentProps,
       animated: true,
       showBackdrop: true
     });
     return await modal.present();
+  }
+
+  private getComponenet(componentName: string) {
+    switch (componentName) {
+      case 'FollowersPage':
+        return FollowersPage;
+      case 'ProfilePage':
+        return ProfilePage;
+    }
   }
 
   private subToNotifications(id: number) {

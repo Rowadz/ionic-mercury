@@ -14,14 +14,15 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { PostPage } from './posts/post/post.page';
 import { ProfilePage } from './profile/profile.page';
+import { FollowersPage } from './followers/followers.page';
 
 const config: SocketIoConfig = {
   url: environment.socket,
   options: {}
 };
 @NgModule({
-  declarations: [AppComponent, PostPage, ProfilePage],
-  entryComponents: [PostPage, ProfilePage],
+  declarations: [AppComponent, PostPage, ProfilePage, FollowersPage],
+  entryComponents: [PostPage, ProfilePage, FollowersPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

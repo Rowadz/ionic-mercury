@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <ng-container *ngIf="!option; else following">
+        Followers
+      </ng-container>
+      <ng-template #following>
+        Following
+      </ng-template>
+
+    </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <div *ngIf="followers$ | async as followers; else loading">
+    <ng-container *ngIf="followers.length; else noFollowers">
+      <ion-item *ngFor="let follower of followers" detail (click)="showProfile(follower.user.id)">
+        <ion-avatar slot="start">
+          <img [src]="follower.user.image">
+        </ion-avatar>
+        <ion-label>
+          {{ follower.user.name }}
+        </ion-label>
+        <ion-chip>
+          <ion-label>{{ follower.created_at | date }}</ion-label>
+        </ion-chip>
+      </ion-item>
+    </ng-container>
+    <ng-template #noFollowers>
+      <ion-text color="warn">
+        <h4> No Followers </h4>
+      </ion-text>
+    </ng-template>
+  </div>
+  <ng-template #loading>
+    <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+  </ng-template>
+</ion-content>

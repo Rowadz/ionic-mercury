@@ -37,7 +37,7 @@ export class ProfilePage implements OnInit {
     this.flipFollowDisable();
     this.profileService.follow(id, this.authSer.userData.id).subscribe(
       d => {
-        this.showToast('Your request was sent');
+        this.showToast('Done!');
         this.close();
       },
       () => {
@@ -62,7 +62,7 @@ export class ProfilePage implements OnInit {
   }
 
   close() {
-    this.modalController.dismiss(`profile${this.id}`);
+    this.modalController.dismiss(`modal${this.id}`);
   }
 
   private flipFollowDisable() {
