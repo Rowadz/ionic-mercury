@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { PostPage } from './posts/post/post.page';
 import { ProfilePage } from './profile/profile.page';
 import { FollowersPage } from './followers/followers.page';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 const config: SocketIoConfig = {
   url: environment.socket,
@@ -37,7 +38,8 @@ const config: SocketIoConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    LocalNotifications
   ],
   bootstrap: [AppComponent]
 })

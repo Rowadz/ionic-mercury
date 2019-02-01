@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
 import { Platform, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -17,13 +19,14 @@ export class AppComponent {
   user: User;
 
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private authService: AuthenService,
+    private readonly platform: Platform,
+    private readonly splashScreen: SplashScreen,
+    private readonly statusBar: StatusBar,
+    private readonly authService: AuthenService,
     private readonly router: Router,
     private readonly notificationService: NotificationService,
-    public modalController: ModalController
+    private readonly modalController: ModalController,
+    private readonly localNotifications: LocalNotifications
   ) {
     this.initializeApp();
     this.subToUser();
@@ -40,6 +43,13 @@ export class AppComponent {
     this.authService.user.subscribe((u: User) => {
       this.user = u;
       // this.subToNotifications(+this.user.id);
+    });
+    // Schedule a single notification
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Single ILocalNotification',
+      sound: 'file://sound.mp3',
+      data: { secret: 'das' }
     });
   }
 
